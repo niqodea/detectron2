@@ -131,7 +131,7 @@ class InferenceAction(Action):
             file_list = [input_spec]
         else:
             file_list = glob.glob(input_spec)
-        return file_list
+        return sorted(file_list)
 
 
 @register_action
