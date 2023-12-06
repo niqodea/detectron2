@@ -22,7 +22,9 @@ class DensePoseResultsVisualizer:
             return image_bgr
 
         boxes_xywh = boxes_xywh.cpu().numpy()
-        context = self.create_visualization_context(image_bgr)
+        # HACK: Make context (background) an empty image
+        context = np.zeros_like(image_bgr)
+        context = cv2.applyColorMap(context, cv2.COLORMAP_VIRIDIS)
         for i, result in enumerate(densepose_result):
             iuv_array = torch.cat(
                 (result.labels[None].type(torch.float32), result.uv * 255.0)
@@ -317,7 +319,9 @@ except ModuleNotFoundError:
 
 
 class DensePoseResultsFineSegmentationVisualizer(DensePoseMaskedColormapResultsVisualizer):
-    def __init__(self, inplace=True, cmap=cv2.COLORMAP_PARULA, alpha=0.7, **kwargs):
+    # HACK: set alpha to 1.0 (no transparency)
+    # HACK: set color map to Viridis
+    def __init__(self, inplace=True, cmap=cv2.COLORMAP_VIRIDIS, alpha=1.0, **kwargs):
         super(DensePoseResultsFineSegmentationVisualizer, self).__init__(
             _extract_i_from_iuvarr,
             _extract_i_from_iuvarr,
