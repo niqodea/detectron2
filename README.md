@@ -3,5 +3,29 @@
 ## Instructions
 
 1. Build the docker image
-2. Run the docker image with name `densepose-magic-animate` and by mounting input and output volumes, mounting them in `/home/appuser/detectron2/projects/DensePose/input` and `/home/appuser/detectron2/projects/DensePose/output` respectively. The docker user should have read access to input and write access to output.
-3. For inference, `mv`/`ln` your video in the mounted input directory, then use `sudo docker exec densepose-magic-animate ./convert-video-to-openpose.sh <VIDEO_FILENAME>`. You will find the densepose sequence video with the same file name in the output directory.
+   ```sh
+   docker build . -t densepose-magic-animate:latest
+   ```
+2. Set up input and output directories for the docker container. The docker user should have read access to input and write access to output.
+   ```sh
+   mkdir /path/to/input
+   mkdir /path/to/output
+
+   # If our user is different from 1000, the docker user will see these mounted directories as not owned
+   # In that case, we need to make the output directory writable by anyone
+   chmod 777 /path/to/output
+   ```
+2. Run the docker image and by mounting input and output volumes.
+   ```sh
+   docker run \
+       -v ./input:/home/app/user/detectron2/projects/DensePose/input \
+       -v ./output:/home/app/user/detectron2/projects/DensePose/output \
+       --gpus device=1 \
+       --name densepose-magic-animate densepose-magic-animate
+   ```
+3. For inference, `mv`/`ln` your video in the mounted input directory, then run the `convert-video-to-openpose.sh` script by specifying the video file name as argument. You will find the densepose sequence video in the output directory.
+   ```sh
+   ln /path/to/my-video.mp4 /path/to/input
+   docker exec densepose-magic-animate ./convert-video-to-openpose my-video.mp4
+   mv /path/to/output/my-video.mp4 /somewhere/else
+   ```
