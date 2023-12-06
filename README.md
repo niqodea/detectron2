@@ -29,3 +29,7 @@
    docker exec densepose-magic-animate ./convert-video-to-openpose my-video.mp4
    mv /path/to/output/my-video.mp4 /somewhere/else
    ```
+
+## TODO
+
+- - Return empty violet background image for frames with undetected poses instead of a black and white source frame
