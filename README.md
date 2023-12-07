@@ -15,7 +15,7 @@
    # In that case, we need to make the output directory writable by anyone
    chmod 777 /path/to/output
    ```
-2. Run the docker image and by mounting input and output volumes.
+2. Run the docker image and by mounting input and output volumes. Also specify the GPU device you want to use.
    ```sh
    docker run \
        -v /path/to/input:/home/app/user/detectron2/projects/DensePose/input \
