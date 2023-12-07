@@ -8,6 +8,7 @@ import os
 import sys
 from typing import Any, ClassVar, Dict, List
 import torch
+from tqdm import tqdm
 
 from detectron2.config import CfgNode, get_cfg
 from detectron2.data.detection_utils import read_image
@@ -98,7 +99,7 @@ class InferenceAction(Action):
             logger.warning(f"No input images for {args.input}")
             return
         context = cls.create_context(args, cfg)
-        for file_name in file_list:
+        for file_name in tqdm(file_list):
             img = read_image(file_name, format="BGR")  # predictor expects BGR image.
             with torch.no_grad():
                 outputs = predictor(img)["instances"]
