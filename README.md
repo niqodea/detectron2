@@ -18,8 +18,8 @@
 2. Run the docker image and by mounting input and output volumes.
    ```sh
    docker run \
-       -v ./input:/home/app/user/detectron2/projects/DensePose/input \
-       -v ./output:/home/app/user/detectron2/projects/DensePose/output \
+       -v /path/to/input:/home/app/user/detectron2/projects/DensePose/input \
+       -v /path/to/output:/home/app/user/detectron2/projects/DensePose/output \
        --gpus device=1 \
        --name densepose-magic-animate densepose-magic-animate
    ```
