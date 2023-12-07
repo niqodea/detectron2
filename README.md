@@ -26,7 +26,7 @@
 3. For inference, `mv`/`ln` your video in the mounted input directory, then run the `convert-video-to-openpose.sh` script by specifying the video file name as argument. You will find the densepose sequence video in the output directory.
    ```sh
    ln /path/to/my-video.mp4 /path/to/input
-   docker exec densepose-magic-animate ./convert-video-to-openpose my-video.mp4
+   docker exec densepose-magic-animate ./convert-video-to-openpose.sh my-video.mp4
    mv /path/to/output/my-video.mp4 /somewhere/else
    ```
 
